@@ -34,6 +34,8 @@ for (var i = 0; i < nums.length; i++){
     }
 }
 
+
+// 요새는 이게 유행이다
 var filteredNums = nums.filter(i => i >= 3).map(function (num) {
     return num + 10;
 });
