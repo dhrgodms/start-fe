@@ -44,7 +44,11 @@ const month = 11;
 const day = 3;
 
 // quiz
-const dateString = year + "-" + month + "-" + day;
+// 템플릿 표현식으로 고쳐주자.
+const dateString = `${String(year).padStart(2, "0")}-${String(month).padStart(
+  2,
+  "0"
+)}-${String(day).padStart(2, "0")}`;
 // 출력: 2022-12-03
 console.log(dateString);
 
@@ -52,7 +56,8 @@ console.log(dateString);
 
 // quiz
 const dateStringEle = dateString.split("-");
-console.log(dateStringEle);
+dateStringResult = dateStringEle.map((i) => Number(i));
+console.log(dateStringResult);
 // 출력: [2022,12,12];
 
 // 3. 문자열 변경
@@ -76,12 +81,17 @@ const point1 = [12, 34, 80, 72];
 const point2 = [1, 80, 94];
 
 // quiz
-// point3이 생길수도 있을때 대응
-
-let result = 0;
-[...point1, ...point2].map((item) => (result += item));
-console.log(result);
-// 출력: 373 (모든 배열값들이 합)
+// point3이 생길수도 있을때 대응 (function 화 해보아라~)
+//버그인~
+const getTotalResult = (...lists) => {
+  let result = 0;
+  for (const arg of lists) {
+    arg.forEach((item) => (result += item));
+  }
+  return result;
+};
+console.log(getTotalResult(point1, point2));
+//출력: 373 (모든 배열값들이 합)
 
 // 6. 소수점 이하를 버리고 정수 구하기
 const a = 1.2;
@@ -96,7 +106,7 @@ const min = 1;
 const max = 10;
 
 // quiz
-console.log(Math.floor(Math.random() * 10));
+console.log(Math.floor(Math.random() * max) + 1);
 //출력: 3 (1~10 포함한 랜덤수)
 
 // 8. 배수 확인
@@ -120,10 +130,7 @@ const items = [1, "a", true, ["a"], { n: 1 }];
 
 // quiz
 const filteredItems = items.filter(
-  (item) =>
-    typeof item !== "object" &&
-    typeof item !== "array" &&
-    typeof item !== "function"
+  (item) => typeof item !== "object" && typeof item !== "function"
 );
 console.log(filteredItems);
 
@@ -136,40 +143,48 @@ const pageSize = 3;
 // quiz
 // pageSize에 따라 배열값 분리해서 출력
 // pageSize=2 일때는 맨끝에 --- 없어야함
-let result11 = "";
-
+let result11 = [];
 const items_result = items1.map((v, i) => {
-  if ((i + 1) % pageSize !== 0 && i !== items1.length - 1) {
-    return v + ",";
+  const isNotEnd = i !== items1.length - 1;
+  const isMultipleOfPageSize = (i + 1) % pageSize !== 0;
+  result11.push(v);
+  if (isMultipleOfPageSize) {
+    if (isNotEnd) {
+      result11.push(",");
+    }
   } else {
-    return v + "---";
+    result11.push("---");
   }
 });
-items_result.forEach((item) => (result11 += item));
-console.log(result11);
+result11.forEach((item) => process.stdout.write(item));
+console.log();
 // 출력: a,b,c---d,e,f---g,h,i---j
 
-// 12
-const items3 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
+// 12 (버그 있으심~~~~~~~~~3개씩 들어가는데 왜그럴까)
+const items12 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 const pageSize12 = 3;
-let result_array12 = [];
+let result12 = [];
 let tempList = [];
 // quiz
 // pageSize에 따라 배열값 분리해서 출력
-items3.forEach((v, i) => {
+items12.forEach((v, i) => {
+  const isNotEnd = i !== items12.length - 1;
+  const isMultipleOfPageSize = (i + 1) % pageSize12 !== 0;
   tempList.push(v);
-  if ((i + 1) % pageSize12 === 0) {
-    result_array12.push(tempList);
-    tempList = [];
+  if (isNotEnd) {
+    if (!isMultipleOfPageSize) {
+      result12.push(tempList);
+      tempList = [];
+    }
   } else {
-    result_array12.push(tempList);
+    result12.push(tempList);
   }
 });
 
-console.log(result_array12);
+console.log(result12);
 // 출력: [ [a,b,c], [d,e,f], [g,h,i], [j] ]
 
-// 13
+// 13 _ 나 이 문제 이해 못한듯
 const items13 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 const pageSize13 = 3;
 
@@ -193,17 +208,146 @@ console.log(/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/.test(phoneNumber));
 // 출력: true
 
 // 15
-const user15 = { nickk: "nio", age: 20, location: "제주" };
+const user15 = { nick: "nio", age: 20, location: "제주" };
 
 // quiz
-const { nickk: nickk, age: age } = user15;
-const user15_copy = { nickk, age: 21, name: "부산" };
+const { nick: nickk, age: age } = user15;
+const user15_copy = { nick, age: 21, name: "부산" };
 console.log(user15_copy);
-// 출력:
+// 출력: {nick:'nio', age:21, name:'부산'}
 
-// 16
-const text16 = "{a:1, b:2}";
-const jsonText16 = JSON.parse(text16);
+// 16 설마 이거 잘라서 "" 붙여줘야되나 오바야~(일단 패스)
+const text16 = "{a:1, b:2}"; // '{"a":1, "b":2}' 면 가능한데 이건 어떻게 해야되는걸까
+// const jsonText16 = JSON.parse(text16);
+let jsonStr16 = "";
+let strIdxList = [];
 // quiz
-console.log(jsonText16);
+for (i = 0; i < text16.length; i++) {
+  if (["{", "}", ":", ","].includes(text16[i])) {
+    strIdxList.push(i);
+  }
+}
+console.log(strIdxList);
+strIdxList.forEach((item) => {
+  text16.slice(item);
+});
 // 출력: {a:1 , b:2}
+
+// 17  프로퍼티 키에 큰따옴표가 붙은 채로 출력되어도 되는걸까요
+const user17 = { nickkk: "nio", age: 20, location: "제주" };
+const result17 = JSON.stringify(user17);
+console.log(result17);
+
+// quiz
+
+// 출력: string "{ nick: 'nio', age: 20, location: '제주' }"
+
+// 18
+const items18 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// quiz
+console.log(items18.filter((item) => item % 2 == 0));
+// 출력: 짝수만 [2,4,6,8,10]
+
+// 19
+const list = [
+  {
+    id: 1,
+    title: "JS",
+    isPublic: true,
+  },
+  {
+    id: 2,
+    title: "기본",
+    isPublic: true,
+  },
+  {
+    id: 3,
+    title: "ecma",
+    isPublic: true,
+  },
+  {
+    id: 4,
+    title: "dom",
+    isPublic: false,
+  },
+];
+
+// quiz
+console.log(
+  list.filter((objItem) => objItem.isPublic).map((item) => item.title)
+);
+// 출력: ['JS','기본','ecma']  isPublic=true 의  title만 뽑기
+
+// 20
+const dday = "2022-02-02";
+
+// quiz
+const ddayStrList = dday.split("-").map((item) => Number(item));
+// console.log(ddayStrList);
+let [year20, month20, day20] = ddayStrList;
+let isLeafYear = false;
+// 윤년인지
+if (year20 % 4 === 0) {
+  if (year20 % 100 !== 0) {
+    if (year20 % 400 === 0) {
+      isLeafYear = true;
+    }
+  }
+}
+// 달의 마지막일에 따른 switch
+switch (month20) {
+  case 1 || 3 || 5 || 7 || 8 || 10:
+    if (day20 !== 31) {
+      day20 += 1;
+    } else {
+      month20 += 1;
+      day20 = 1;
+    }
+    break;
+
+  case 4 || 6 || 9 || 11:
+    if (day20 !== 30) {
+      day20 += 1;
+    } else {
+      month20 += 1;
+      day20 = 1;
+    }
+    break;
+  case 2:
+    if (isLeafYear) {
+      if (day20 !== 29) {
+        day20 += 1;
+      } else {
+        month20 += 1;
+        day20 = 1;
+      }
+    } else {
+      if (day20 !== 28) {
+        day20 += 1;
+      } else {
+        month20 += 1;
+        day20 = 1;
+      }
+    }
+    break;
+  case 12:
+    if (day20 !== 31) {
+      day20 += 1;
+    } else {
+      month20 = 1;
+      day20 = 1;
+      year20 += 1;
+    }
+    break;
+
+  default:
+    console.error("잘못된 입력");
+}
+console.log(
+  `${String(year20).padStart(2, "0")}-${String(month20).padStart(
+    2,
+    "0"
+  )}-${String(day20).padStart(2, "0")}`
+);
+
+// 출력: '2022-02-03'
