@@ -160,7 +160,7 @@ result11.forEach((item) => process.stdout.write(item));
 console.log();
 // 출력: a,b,c---d,e,f---g,h,i---j
 
-// 12 (버그 있으심~~~~~~~~~3개씩 들어가는데 왜그럴까)
+// 12
 const items12 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 const pageSize12 = 3;
 let result12 = [];
