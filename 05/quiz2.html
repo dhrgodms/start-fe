@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>source</title>
+  </head>
+  <body>
+    <div id="board">
+      <!-- 이 HTML을 자바스크립트로 추가하면 됩니다.
+      <span class="black"></span>
+      <span class="white"></span>
+      <span class="black"></span>
+      <span class="white"></span>
+      <span class="white"></span>
+      <span class="black"></span>
+      <span class="white"></span>
+      <span class="black"></span>
+      <span class="black"></span>
+      <span class="white"></span>
+      <span class="black"></span>
+      <span class="white"></span>
+      <span class="white"></span>
+      <span class="black"></span>
+      <span class="white"></span>
+      <span class="black"></span>
+    //-->
+    </div>
+    <script>
+      var board = document.getElementById("board");
+      var clickCallBack = (e) => {
+        console.log(e.target.style.cssText);
+        if (e.target.className === "white") {
+          e.target.style.cssText = e.target.style.cssText.replace(
+            "background: white",
+            "background:red"
+          );
+        } else {
+          e.target.style.cssText = e.target.style.cssText.replace(
+            "background: black",
+            "background:red"
+          );
+        }
+      };
+      window.addEventListener("click", clickCallBack);
+
+      board.style =
+        "display:flex;border:3px solid gray;width:200px;height:200px;flex-wrap:wrap";
+      for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+          iisEven = i % 2 === 0;
+          jisEven = j % 2 === 0;
+
+          // TODO : 여기에 필요한 코드를 작성해주세요.
+          if (iisEven && jisEven) {
+            const spanBlack = document.createElement("span");
+            spanBlack.className = "black";
+            spanBlack.style = "background:black;width:50px;height:50px";
+
+            board.appendChild(spanBlack);
+          } else if ((!iisEven && jisEven) || (iisEven && !jisEven)) {
+            const spanWhite = document.createElement("span");
+            spanWhite.className = "white";
+            spanWhite.style = "background:white;width:50px;height:50px";
+
+            board.appendChild(spanWhite);
+          } else {
+            const spanBlack = document.createElement("span");
+            spanBlack.className = "black";
+            spanBlack.style = "background:black;width:50px;height:50px";
+
+            board.appendChild(spanBlack);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

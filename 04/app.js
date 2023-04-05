@@ -184,6 +184,9 @@ items12.forEach((v, i) => {
 console.log(result12);
 // 출력: [ [a,b,c], [d,e,f], [g,h,i], [j] ]
 
+// 더 쉽게 풀어보기
+// slice로 잘라서 push하는 방식을 이용하면 더 쉽고 작게 표기할 수 있음
+
 // 13 _ 나 이 문제 이해 못한듯
 const items13 = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 const pageSize13 = 3;
@@ -208,6 +211,7 @@ console.log(/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/.test(phoneNumber));
 // 출력: true
 
 // 15
+// delete로 속성지울 수 있음
 const user15 = { nick: "nio", age: 20, location: "제주" };
 
 // quiz
@@ -217,6 +221,7 @@ console.log(user15_copy);
 // 출력: {nick:'nio', age:21, name:'부산'}
 
 // 16 설마 이거 잘라서 "" 붙여줘야되나 오바야~(일단 패스)
+// replace 를 정규표현식으로해줄수도 있다!(정규표현식 공부하는게 좋을듯)
 const text16 = "{a:1, b:2}"; // '{"a":1, "b":2}' 면 가능한데 이건 어떻게 해야되는걸까
 // const jsonText16 = JSON.parse(text16);
 let jsonStr16 = "";
@@ -280,6 +285,11 @@ console.log(
 
 // 20
 const dday = "2022-02-02";
+
+// // 나는 노가다를 했지만~
+// let day20 = new Date(dday);
+// let nextDay20 = new Date(day20.setDate(day20.getDate() + 1));
+// getMonth, getYear 이런거 사용하면 더 좋음
 
 // quiz
 const ddayStrList = dday.split("-").map((item) => Number(item));
