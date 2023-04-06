@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>DOM</title>
+    <style>
+      body {
+        padding: 10px;
+      }
+      .box {
+        width: 100px;
+        height: 30px;
+        background-color: #ddd;
+      }
+      .red {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="text" class="txt" value="hello" />
+      <button class="text-btn">TEXT 넣기</button>
+      <br />
+      <button class="add-red">빨간색으로</button>
+      <button class="add-btn">추가</button>
+      <button class="delete-btn">삭제</button>
+      <button class="reset-btn">초기화</button>
+      <button class="toggle-btn">보이기,숨기기 토글</button>
+      <button class="image-btn">이미지</button>
+    </div>
+
+    <div class="box"></div>
+
+    <script>
+      const $box = document.querySelector(".box");
+      const $addRed = document.querySelector(".add-red");
+      const $addBtn = document.querySelector(".add-btn");
+      const $deleteBtn = document.querySelector(".delete-btn");
+      const $textBtn = document.querySelector(".text-btn");
+      const $resetBtn = document.querySelector(".reset-btn");
+      const $toggleBtn = document.querySelector(".toggle-btn");
+      const $imageBtn = document.querySelector(".image-btn");
+
+      let isHidden = false;
+
+      const image = document.createElement("img");
+      image.src = "https://i.imgur.com/69NjYBH.png";
+      image.style = "width:100%;height:100%";
+
+      const getBox = () => {
+        const getAllBox = document.querySelectorAll(".box");
+        return getAllBox;
+      };
+
+      //1. add-red 누르면 class 속성에 red 추가
+      $addRed.addEventListener("click", (e) => {
+        $box.classList.add("red");
+      });
+
+      //2. add-btn 누르면 box 엘리먼트를 body에 하나씩 추가
+      $addBtn.addEventListener("click", (e) => {
+        const boxclone = $box.cloneNode(true);
+        document.body.appendChild(boxclone);
+      });
+
+      //3. delete-btn 누르면 box 엘리먼트를 하나씩 삭제
+      $deleteBtn.addEventListener("click", (e) => {
+        const $box = document.querySelector(".box");
+        document.body.removeChild($box);
+      });
+
+      //4. text-btn 누르면 .txt에 value값 가져와서 box에 값 텍스트 추가
+      $textBtn.addEventListener("click", (e) => {
+        const text = document.querySelector(".txt").value;
+        getAllBox.forEach((element) => element.append(text));
+      });
+
+      //5. reset-btn 누르면 모든 .box element 제거
+      $resetBtn.addEventListener("click", (e) => {
+        const getAllBox = getBox();
+        getAllBox.forEach((element) => document.body.removeChild(element));
+      });
+
+      //6. toggle-btn 클릭하면 box element 숨기고 다시 클릭하면 보이게 토글버튼 처리
+      $toggleBtn.addEventListener("click", (e) => {
+        isHidden = !isHidden;
+        const getAllBox = getBox();
+        getAllBox.forEach((element) => {
+          element.style.visibility = isHidden ? "hidden" : "visible";
+        });
+      });
+
+      //7. image-btn 클릭 시 box element에 이미지 출력(없을 경우, 생성 후 처리)
+      $imageBtn.addEventListener("click", (e) => {
+        const getAllBox = getBox();
+        if (getAllBox.length !== 0) {
+          getAllBox.forEach((element) => {
+            element.append(image);
+          });
+        } else {
+          const newBox = document.createElement("div");
+          newBox.className = "box";
+          document.body.appendChild(newBox);
+          newBox.append(image);
+        }
+      });
+
+      //8. 코드 함수화
+    </script>
+  </body>
+</html>
