@@ -1,0 +1,37 @@
+<style>
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+</style>
+<body>
+  <form>
+    id <input type="text" name="id" /> pw <input type="text" name="pw" />
+    <button type="submit">로그인</button>
+  </form>
+  <h2 id="result"></h2>
+  <script>
+    // 입력한 id,pw가 맞을경우엔 success , 아니면 error출력
+    const id = "hello";
+    const pw = "world";
+    let $id = document.querySelector('input[name="id"]');
+    let $pw = document.querySelector('input[name="pw"]');
+    const $btn = document.querySelector("button");
+    const $result = document.querySelector("#result");
+
+    // form에서는 웬만하면 submit 이벤트를 쓰는게 좋다
+    window.addEventListener("submit", (e) => {
+      e.preventDefault();
+      console.log("click");
+      if ($id.value === id && $pw.value === pw) {
+        $result.innerHTML = `<span class="success">success</span>`;
+        console.log("success");
+      } else {
+        $result.innerHTML = `<span class="error">error</span>`;
+        console.log("error");
+      }
+    });
+  </script>
+</body>
