@@ -7,15 +7,17 @@ let pointNumber = 0;
 let lifeNumber = 10;
 
 $box.addEventListener("click", (e) => {
-  let randomNum = Math.floor(Math.random() * 390) + 1;
-  $bug.style.left = randomNum + "px";
-  $bug.style.top = randomNum + "px";
+  let randomNumLeft = Math.floor(Math.random() * 390) + 1;
+  let randomNumTop = Math.floor(Math.random() * 390) + 1;
+
+  $bug.style.left = randomNumLeft - 10 + "px";
+  $bug.style.top = randomNumTop - 10 + "px";
 
   if (e.target === $bug) {
     pointNumber += 1;
     $point.textContent = pointNumber;
   } else {
-    lifeNumber -= 1;
+    if (lifeNumber > 0) lifeNumber -= 1;
     $life.textContent = lifeNumber;
   }
 });
