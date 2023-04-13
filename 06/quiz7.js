@@ -7,6 +7,12 @@ $bug.addEventListener("click", (e) => {
   let randomNum = Math.floor(Math.random() * 390) + 1;
   $bug.style.left = randomNum + "px";
   $bug.style.top = randomNum + "px";
-  $point.text = $point.text + 1;
-  console.log($point.text);
+});
+
+$box.addEventListener("click", (e) => {
+  if (e.target === $bug) {
+    $point.textContent = parseInt($point.textContent) + 1;
+  } else {
+    $life.textContent = parseInt($life.textContent) - 1;
+  }
 });
