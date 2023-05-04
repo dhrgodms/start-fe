@@ -45,6 +45,7 @@ function submitForm(e) {
 function moreItems(e) {
   e;
 }
+
 function renderItems(data) {
   let result = [];
   // data를 item dom으로 변환
